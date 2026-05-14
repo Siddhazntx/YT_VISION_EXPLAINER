@@ -1,0 +1,757 @@
+/* =========================================
+   YT VISION EXPLAINER UI SYSTEM
+   ========================================= */
+
+:host {
+
+    /* -------------------------------------
+       COLOR TOKENS
+       ------------------------------------- */
+
+    --ytv-bg-primary:
+        rgba(24, 24, 27, 0.88);
+
+    --ytv-bg-secondary:
+        rgba(39, 39, 42, 0.92);
+
+    --ytv-bg-tertiary:
+        rgba(9, 9, 11, 0.72);
+
+    --ytv-border:
+        rgba(82, 82, 91, 0.42);
+
+    --ytv-border-soft:
+        rgba(113, 113, 122, 0.16);
+
+    --ytv-text-primary:
+        #FAFAFA;
+
+    --ytv-text-secondary:
+        #A1A1AA;
+
+    --ytv-text-muted:
+        #71717A;
+
+    --ytv-accent:
+        #3B82F6;
+
+    --ytv-accent-hover:
+        #2563EB;
+
+    --ytv-danger:
+        #DC2626;
+
+    --ytv-success:
+        #16A34A;
+
+    /* -------------------------------------
+       TYPOGRAPHY
+       ------------------------------------- */
+
+    --ytv-font-sans:
+        Inter,
+        system-ui,
+        sans-serif;
+
+    --ytv-font-mono:
+        "SFMono-Regular",
+        Consolas,
+        monospace;
+
+    /* -------------------------------------
+       RADII
+       ------------------------------------- */
+
+    --ytv-radius-xl: 18px;
+    --ytv-radius-lg: 14px;
+    --ytv-radius-md: 10px;
+    --ytv-radius-sm: 6px;
+
+    /* -------------------------------------
+       SHADOWS
+       ------------------------------------- */
+
+    --ytv-shadow-panel:
+        0 20px 60px rgba(0,0,0,0.45);
+
+    --ytv-shadow-soft:
+        0 4px 24px rgba(0,0,0,0.18);
+
+    /* -------------------------------------
+       TRANSITIONS
+       ------------------------------------- */
+
+    --ytv-transition-fast:
+        120ms cubic-bezier(.2,.8,.2,1);
+
+    --ytv-transition-normal:
+        220ms cubic-bezier(.2,.8,.2,1);
+
+    /* -------------------------------------
+       EFFECTS
+       ------------------------------------- */
+
+    --ytv-backdrop-blur:
+        blur(14px);
+
+    /* -------------------------------------
+       Z-LAYER
+       ------------------------------------- */
+
+    --ytv-z:
+        2147483647;
+
+    /* contain: layout style paint; */
+
+    color-scheme: dark;
+}
+
+/* =========================================
+   RESET
+   ========================================= */
+
+:host,
+:host * ,
+:host *::before,
+:host *::after {
+
+    box-sizing: border-box;
+}
+
+:host * {
+
+    font-family: var(--ytv-font-sans);
+}
+
+/* =========================================
+   SCROLLBAR
+   ========================================= */
+
+::-webkit-scrollbar {
+
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+
+    background:
+        rgba(255,255,255,0.12);
+
+    border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+
+    background:
+        rgba(255,255,255,0.22);
+}
+
+/* =========================================
+   MAIN PANEL
+   ========================================= */
+
+#ytv-chat-container {
+
+    position: fixed;
+
+    min-height: 0;
+    max-height: 90vh;
+
+    width: 420px;
+    height: 540px;
+    top: 24px;
+    right: 24px;
+    pointer-events: auto;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+
+    border-radius:
+        var(--ytv-radius-xl);
+
+    border:
+        1px solid var(--ytv-border);
+
+    background:
+        var(--ytv-bg-primary);
+
+    box-shadow:
+        var(--ytv-shadow-panel);
+
+    z-index:
+        var(--ytv-z);
+
+    isolation: isolate;
+
+    animation:
+        ytv-panel-enter
+        180ms
+        cubic-bezier(.2,.8,.2,1);
+
+    transform-origin:
+        bottom right;
+
+    will-change:
+        transform,
+        opacity;
+}
+
+/* Progressive enhancement */
+@supports (backdrop-filter: blur(1px)) {
+
+    #ytv-chat-container {
+
+        backdrop-filter:
+            var(--ytv-backdrop-blur);
+
+        -webkit-backdrop-filter:
+            var(--ytv-backdrop-blur);
+    }
+}
+
+/* =========================================
+   HEADER
+   ========================================= */
+
+.ytv-header {
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    padding: 14px 16px;
+
+    border-bottom:
+        1px solid var(--ytv-border-soft);
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(255,255,255,0.03),
+            transparent
+        );
+
+    cursor: grab;
+
+    user-select: none;
+
+    flex-shrink: 0;
+}
+
+.ytv-header:active {
+
+    cursor: grabbing;
+}
+
+.ytv-title-wrap {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    letter-spacing: -0.01em;
+}
+
+/* =========================================
+   ICON BUTTONS
+   ========================================= */
+
+.ytv-icon-btn {
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 32px;
+    height: 32px;
+
+    border: none;
+
+    border-radius:
+        var(--ytv-radius-md);
+
+    background: transparent;
+
+    color:
+        var(--ytv-text-secondary);
+
+    cursor: pointer;
+
+    transition:
+        background var(--ytv-transition-fast),
+        color var(--ytv-transition-fast),
+        transform var(--ytv-transition-fast);
+}
+
+.ytv-icon-btn:hover {
+
+    background:
+        rgba(255,255,255,0.08);
+
+    color:
+        var(--ytv-text-primary);
+}
+
+.ytv-icon-btn:active {
+
+    transform: scale(0.96);
+}
+
+/* =========================================
+   CHAT BODY
+   ========================================= */
+
+.ytv-chat-body {
+
+    flex: 1;
+
+    min-height: 0;
+
+    overflow-y: auto;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 16px;
+
+    padding: 18px;
+
+    overscroll-behavior: contain;
+
+    scroll-behavior: smooth;
+}
+
+/* =========================================
+   IMAGE PREVIEW
+   ========================================= */
+
+.ytv-preview-wrapper {
+
+    overflow: hidden;
+
+    border-radius:
+        var(--ytv-radius-lg);
+
+    border:
+        1px solid var(--ytv-border-soft);
+
+    background: #000;
+
+    position: relative;
+}
+
+.ytv-preview-image {
+
+    display: block;
+
+    width: 100%;
+
+    max-height: 220px;
+
+    object-fit: contain;
+}
+
+/* =========================================
+   MARKDOWN
+   ========================================= */
+
+.ytv-message {
+
+    font-size: 14px;
+
+    line-height: 1.7;
+
+    word-break: break-word;
+}
+
+.ytv-message p {
+
+    margin-bottom: 14px;
+}
+
+.ytv-message strong {
+
+    color:
+        var(--ytv-accent);
+
+    font-weight: 600;
+}
+
+.ytv-message a {
+
+    color:
+        var(--ytv-accent);
+
+    text-decoration: none;
+}
+
+.ytv-message a:hover {
+
+    text-decoration: underline;
+}
+
+/* =========================================
+   INLINE CODE
+   ========================================= */
+
+.ytv-message code:not(pre code) {
+
+    font-family:
+        var(--ytv-font-mono);
+
+    font-size: 12px;
+
+    padding: 2px 6px;
+
+    border-radius: 5px;
+
+    background:
+        rgba(255,255,255,0.08);
+
+    color:
+        #E4E4E7;
+}
+
+/* =========================================
+   CODE BLOCKS
+   ========================================= */
+
+.ytv-message pre {
+
+    overflow-x: auto;
+
+    margin: 14px 0;
+
+    padding: 14px;
+
+    border-radius:
+        var(--ytv-radius-lg);
+
+    border:
+        1px solid var(--ytv-border-soft);
+
+    background:
+        rgba(0,0,0,0.28);
+}
+
+.ytv-message pre code {
+
+    font-family:
+        var(--ytv-font-mono);
+
+    font-size: 12px;
+
+    line-height: 1.7;
+
+    color:
+        #C4B5FD;
+}
+
+/* =========================================
+   FOOTER
+   ========================================= */
+
+.ytv-footer {
+
+    padding: 14px 16px;
+
+    border-top:
+        1px solid var(--ytv-border-soft);
+
+    background:
+        linear-gradient(
+            to top,
+            rgba(255,255,255,0.02),
+            transparent
+        );
+
+    flex-shrink: 0;
+}
+
+/* =========================================
+   INPUT GROUP
+   ========================================= */
+
+.ytv-input-group {
+
+    display: flex;
+
+    align-items: flex-end;
+
+    gap: 10px;
+
+    padding: 8px;
+
+    border-radius:
+        999px;
+
+    border:
+        1px solid var(--ytv-border);
+
+    background:
+        var(--ytv-bg-tertiary);
+
+    transition:
+        border-color var(--ytv-transition-fast),
+        box-shadow var(--ytv-transition-fast);
+}
+
+.ytv-input-group:focus-within {
+
+    border-color:
+        var(--ytv-accent);
+
+    box-shadow:
+        0 0 0 3px rgba(59,130,246,0.15);
+}
+
+/* =========================================
+   TEXTAREA
+   ========================================= */
+
+.ytv-input {
+
+    flex: 1;
+
+    min-height: 24px;
+    max-height: 120px;
+
+    resize: none;
+
+    overflow-y: auto;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    color:
+        var(--ytv-text-primary);
+
+    font-size: 14px;
+
+    line-height: 1.5;
+}
+
+.ytv-input::placeholder {
+
+    color:
+        var(--ytv-text-muted);
+}
+
+/* =========================================
+   SEND BUTTON
+   ========================================= */
+
+.ytv-send-btn {
+
+    width: 34px;
+    height: 34px;
+
+    flex-shrink: 0;
+
+    border: none;
+
+    border-radius:
+        999px;
+
+    background:
+        var(--ytv-accent);
+
+    color: white;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    transition:
+        transform var(--ytv-transition-fast),
+        background var(--ytv-transition-fast),
+        opacity var(--ytv-transition-fast);
+}
+
+.ytv-send-btn:hover:not(:disabled) {
+
+    background:
+        var(--ytv-accent-hover);
+}
+
+.ytv-send-btn:active:not(:disabled) {
+
+    transform: scale(0.94);
+}
+
+.ytv-send-btn:disabled {
+
+    opacity: 0.5;
+
+    cursor: not-allowed;
+}
+
+/* =========================================
+   STREAMING CURSOR
+   ========================================= */
+
+.ytv-streaming-cursor {
+
+    display: inline-block;
+
+    width: 8px;
+    height: 1em;
+
+    margin-left: 2px;
+
+    background:
+        var(--ytv-accent);
+
+    animation:
+        ytv-blink
+        1s infinite;
+}
+
+/* =========================================
+   LOADING DOTS
+   ========================================= */
+
+.ytv-loading-dots {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 5px;
+
+    padding: 4px 0;
+}
+
+.ytv-dot {
+
+    width: 6px;
+    height: 6px;
+
+    border-radius: 999px;
+
+    background:
+        var(--ytv-accent);
+
+    animation:
+        ytv-bounce 1.2s infinite ease-in-out;
+}
+
+.ytv-dot:nth-child(2) {
+
+    animation-delay: 0.15s;
+}
+
+.ytv-dot:nth-child(3) {
+
+    animation-delay: 0.3s;
+}
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+
+@media (max-width: 640px) {
+
+    #ytv-chat-container {
+
+        width: calc(100vw - 24px);
+
+        height: min(
+            75vh,
+            640px
+        );
+
+        right: 12px !important;
+        bottom: 12px !important;
+    }
+}
+
+/* =========================================
+   REDUCED MOTION
+   ========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    * {
+
+        animation: none !important;
+
+        transition: none !important;
+
+        scroll-behavior: auto !important;
+    }
+}
+
+/* =========================================
+   ANIMATIONS
+   ========================================= */
+
+@keyframes ytv-panel-enter {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(16px)
+            scale(0.98);
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
+
+@keyframes ytv-bounce {
+
+    0%, 80%, 100% {
+
+        transform: scale(0);
+    }
+
+    40% {
+
+        transform: scale(1);
+    }
+}
+
+@keyframes ytv-blink {
+
+    0%, 50% {
+
+        opacity: 1;
+    }
+
+    51%, 100% {
+
+        opacity: 0;
+    }
+}

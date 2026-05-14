@@ -1,0 +1,423 @@
+/**
+ * =========================================
+ * YT VISION EXPLAINER — OPTIONS UI SYSTEM
+ * =========================================
+ */
+
+/* =========================================
+   DESIGN TOKENS
+   ========================================= */
+
+:root {
+
+    /* -------------------------------------
+       COLORS
+       ------------------------------------- */
+
+    --ytv-bg-primary:
+        #09090B;
+
+    --ytv-bg-secondary:
+        #18181B;
+
+    --ytv-bg-surface:
+        rgba(39,39,42,0.92);
+
+    --ytv-border:
+        rgba(82,82,91,0.42);
+
+    --ytv-border-soft:
+        rgba(113,113,122,0.18);
+
+    --ytv-text-primary:
+        #FAFAFA;
+
+    --ytv-text-secondary:
+        #A1A1AA;
+
+    --ytv-text-muted:
+        #71717A;
+
+    --ytv-accent:
+        #3B82F6;
+
+    --ytv-accent-hover:
+        #2563EB;
+
+    --ytv-success:
+        #16A34A;
+
+    --ytv-danger:
+        #DC2626;
+
+    /* -------------------------------------
+       TYPOGRAPHY
+       ------------------------------------- */
+
+    --ytv-font-sans:
+        Inter,
+        system-ui,
+        sans-serif;
+
+    /* -------------------------------------
+       RADII
+       ------------------------------------- */
+
+    --ytv-radius-xl: 20px;
+    --ytv-radius-lg: 14px;
+    --ytv-radius-md: 10px;
+    --ytv-radius-sm: 6px;
+
+    /* -------------------------------------
+       SHADOWS
+       ------------------------------------- */
+
+    --ytv-shadow-soft:
+        0 4px 24px rgba(0,0,0,0.18);
+
+    --ytv-shadow-panel:
+        0 20px 60px rgba(0,0,0,0.4);
+
+    /* -------------------------------------
+       TRANSITIONS
+       ------------------------------------- */
+
+    --ytv-transition-fast:
+        120ms cubic-bezier(.2,.8,.2,1);
+
+    --ytv-transition-normal:
+        220ms cubic-bezier(.2,.8,.2,1);
+}
+
+/* =========================================
+   BASE RESET
+   ========================================= */
+
+*,
+*::before,
+*::after {
+
+    box-sizing: border-box;
+}
+
+html {
+
+    color-scheme: dark;
+
+    scroll-behavior: smooth;
+}
+
+body {
+
+    margin: 0;
+
+    font-family:
+        var(--ytv-font-sans);
+
+    background:
+        radial-gradient(
+            circle at top,
+            rgba(59,130,246,0.08),
+            transparent 45%
+        ),
+        var(--ytv-bg-primary);
+
+    color:
+        var(--ytv-text-primary);
+
+    -webkit-font-smoothing:
+        antialiased;
+
+    text-rendering:
+        optimizeLegibility;
+}
+
+/* =========================================
+   CUSTOM SCROLLBAR
+   ========================================= */
+
+::-webkit-scrollbar {
+
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+
+    background:
+        rgba(255,255,255,0.12);
+
+    border-radius: 999px;
+
+    transition:
+        background var(--ytv-transition-fast);
+}
+
+::-webkit-scrollbar-thumb:hover {
+
+    background:
+        rgba(255,255,255,0.24);
+}
+
+/* =========================================
+   CONTROLS
+   ========================================= */
+
+.ytv-control {
+
+    width: 100%;
+
+    border:
+        1px solid var(--ytv-border);
+
+    border-radius:
+        var(--ytv-radius-lg);
+
+    background:
+        rgba(9,9,11,0.82);
+
+    color:
+        var(--ytv-text-primary);
+
+    transition:
+        border-color var(--ytv-transition-fast),
+        box-shadow var(--ytv-transition-fast),
+        transform var(--ytv-transition-fast);
+
+    will-change:
+        border-color,
+        box-shadow;
+}
+
+.ytv-control:hover {
+
+    border-color:
+        rgba(113,113,122,0.4);
+}
+
+.ytv-control:focus-visible {
+
+    outline: none;
+
+    border-color:
+        var(--ytv-accent);
+
+    box-shadow:
+        0 0 0 3px rgba(59,130,246,0.18);
+}
+
+/* =========================================
+   BUTTONS
+   ========================================= */
+
+.ytv-btn {
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    border: none;
+
+    border-radius:
+        var(--ytv-radius-lg);
+
+    cursor: pointer;
+
+    font-weight: 600;
+
+    transition:
+        transform var(--ytv-transition-fast),
+        background var(--ytv-transition-fast),
+        opacity var(--ytv-transition-fast);
+
+    user-select: none;
+}
+
+.ytv-btn:active {
+
+    transform: scale(0.98);
+}
+
+.ytv-btn-primary {
+
+    background:
+        var(--ytv-accent);
+
+    color: white;
+}
+
+.ytv-btn-primary:hover:not(:disabled) {
+
+    background:
+        var(--ytv-accent-hover);
+}
+
+.ytv-btn:disabled {
+
+    opacity: 0.6;
+
+    cursor: not-allowed;
+}
+
+/* =========================================
+   STATUS STATES
+   ========================================= */
+
+.ytv-status {
+
+    border-radius:
+        var(--ytv-radius-md);
+
+    padding: 12px 14px;
+
+    border: 1px solid transparent;
+
+    font-size: 14px;
+
+    animation:
+        ytv-fade-up
+        180ms ease;
+}
+
+.ytv-status-success {
+
+    background:
+        rgba(22,163,74,0.12);
+
+    border-color:
+        rgba(22,163,74,0.24);
+
+    color:
+        #4ADE80;
+}
+
+.ytv-status-error {
+
+    background:
+        rgba(220,38,38,0.12);
+
+    border-color:
+        rgba(220,38,38,0.24);
+
+    color:
+        #F87171;
+}
+
+/* =========================================
+   LOADING SPINNER
+   ========================================= */
+
+.ytv-spinner {
+
+    animation:
+        ytv-spin
+        1s linear infinite;
+
+    will-change:
+        transform;
+}
+
+/* =========================================
+   CARD SURFACE
+   ========================================= */
+
+.ytv-surface {
+
+    background:
+        var(--ytv-bg-surface);
+
+    border:
+        1px solid var(--ytv-border-soft);
+
+    border-radius:
+        var(--ytv-radius-xl);
+
+    box-shadow:
+        var(--ytv-shadow-panel);
+
+    backdrop-filter:
+        blur(18px);
+
+    -webkit-backdrop-filter:
+        blur(18px);
+}
+
+/* =========================================
+   ANIMATIONS
+   ========================================= */
+
+@keyframes ytv-spin {
+
+    from {
+
+        transform: rotate(0deg);
+    }
+
+    to {
+
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes ytv-fade-up {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(4px);
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0);
+    }
+}
+
+/* =========================================
+   REDUCED MOTION
+   ========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+
+        animation: none !important;
+
+        transition: none !important;
+
+        scroll-behavior: auto !important;
+    }
+}
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+
+@media (max-width: 640px) {
+
+    body {
+
+        padding: 16px;
+    }
+
+    .ytv-surface {
+
+        border-radius:
+            16px;
+    }
+}

@@ -1,0 +1,15 @@
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Editor directories and files (VS Code, Cursor, etc.)
+.vscode/
+.idea/
+
+# Chrome Extension packaging files (Never upload these to GitHub)
+*.pem
+*.crx
+*.zip
+
+# Ignore environment variables if you ever use them later
+.env

@@ -1,0 +1,54 @@
+{
+  "manifest_version": 3,
+  "name": "YT Vision Extension",
+  "short_name": "YT Vision",
+  "version": "1.0.0",
+  "description": "Highlight any part of a YouTube video to get instant, contextual AI explanations without leaving the tab.",
+  
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting",
+    "tabs"
+  ],
+  "host_permissions": [
+    "https://*.youtube.com/*",
+    "https://generativelanguage.googleapis.com/*"
+  ],
+  "background": {
+    "service_worker": "background/service_worker.js"
+  },
+  "action": {
+    "default_title": "Activate Capture Mode"
+  },
+  "options_page": "options/options.html",
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.youtube.com/*"
+      ],
+      "js": [
+        "lib/constants.js",
+        "lib/storage.js",
+        "lib/dom.js",
+        "lib/gemini.js",
+        "content/capture_mode.js",
+        "content/chat_ui.js",
+        "content/injector.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "content/shadow_style.css",
+        "tailwind/output.css"
+      ],
+      "matches": ["*://*.youtube.com/*"]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';"
+  }
+}
