@@ -13,3 +13,5 @@ Thumbs.db
 
 # Ignore environment variables if you ever use them later
 .env
+
+node_modules/
