@@ -93,4 +93,4 @@ AnthropicAPI.askVisionModel(request.payload.image, request.payload.prompt, reque
 
 ## 🎥 Demonstration
 
-[*(Screen recording demonstrating the screenshot capture loop, floating interface deployment, and conversation pipelines coming here soon!)*](https://youtu.be/FXooe5Jw5J4)
+[*(Click here to go to Youtube for demonstartion)*](https://youtu.be/FXooe5Jw5J4)
